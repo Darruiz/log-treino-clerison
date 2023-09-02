@@ -8,7 +8,7 @@ $conexao = $database->conectar();
 
 if (isset($_POST['usuario']) && isset($_POST['password'])) {
     $usuario = $_POST['usuario'];
-    $senha = md5($_POST['password']); 
+    $senha = sha1($_POST['password']); 
 
     if (!empty($usuario) && !empty($senha)) {
         $sql = $conexao->prepare("SELECT id FROM usuarios WHERE nome = :n AND senha = :s");

@@ -3,7 +3,7 @@ class Database{
     private $hostname = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $database = 'dzcl';
+    private $database = 'valor';
     private $conexao;
 
     public function conectar(){

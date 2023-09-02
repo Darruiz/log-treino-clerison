@@ -17,21 +17,19 @@ class usuario
         }
     }
 
-    public function cadastrar($nome, $senha)
-    {
+    public function cadastrar($nome, $senha, $email, $dataan) {
         $sql = $this->pdo->prepare("SELECT id FROM usuarios WHERE nome = :n");
         $sql->bindValue(":n", $nome);
         $sql->execute();
 
-        if ($sql->rowCount() > 0)
-        {
+        if ($sql->rowCount() > 0) {
             return false;
-        }
-        else
-        {
-            $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, senha) VALUES (:n, :s)");
+        } else {
+            $sql = $this->pdo->prepare("INSERT INTO usuarios (nome, senha, email, data_aniversario) VALUES (:n, :s, :e, :d)");
             $sql->bindValue(":n", $nome);
-            $sql->bindValue(":s", md5($senha));
+            $sql->bindValue(":s", sha1($senha)); 
+            $sql->bindvalue(":e", $email);
+            $sql->bindvalue(":d", $dataan); 
             $sql->execute();
 
             return true;
@@ -40,11 +38,11 @@ class usuario
 
     public function logar($nome, $senha)
     {
-        $senhaMD5 = md5($senha);
+        $senhasha1 = sha1($senha);
 
         $sql = $this->pdo->prepare("SELECT id FROM usuarios WHERE nome = :n AND senha = :s");
         $sql->bindValue(":n", $nome);
-        $sql->bindValue(":s", $senhaMD5);
+        $sql->bindValue(":s", $senhasha1);
         $sql->execute();
 
         if ($sql->rowCount() > 0)
